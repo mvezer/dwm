@@ -1,6 +1,8 @@
 # dwm fork from suckless.org
 
 ### patches applied:
+- [autostart-20210120-cb3f58a](https://dwm.suckless.org/patches/autostart/)
+
 
 ### original dwm readme:
 
