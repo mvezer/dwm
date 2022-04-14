@@ -13,3 +13,5 @@ elif [ -d "$HOME/.dwm" ]; then
 	rm -rf $HOME/.dwm
 fi
 ln -s "$(pwd)/.dwm" $DWM_DIR
+
+sudo cp -f ./scripts/startdwm /usr/bin/
