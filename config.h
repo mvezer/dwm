@@ -63,6 +63,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "alacritty", "-o", "font.size=9", NULL };
 static const char *browsercmd[]  = { "qutebrowser", NULL };
 static const char *bluetoothcmd[]  = { "blueman-manager", NULL };
+static const char *pavucontrolcmd[]  = { "pavucontrol", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -70,6 +71,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = bluetoothcmd } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = browsercmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pavucontrolcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
