@@ -14,4 +14,10 @@ elif [ -d "$HOME/.dwm" ]; then
 fi
 ln -s "$(pwd)/.dwm" $DWM_DIR
 
-sudo cp -f ./scripts/startdwm /usr/bin/
+# create symbolic links for the starter scripts
+if [ ! -e "/usr/bin/startdwm" ]; then
+	sudo ln -s "$(pwd)/scripts/startdwm" /usr/bin/startdwm
+fi
+if [ ! -e "/usr/bin/dwm-bar" ]; then
+	sudo ln -s "$WORKSPACE/dwm-bar/dwm_bar.sh" /usr/bin/dwm-bar
+fi
