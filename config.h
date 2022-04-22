@@ -62,7 +62,7 @@ static const Layout layouts[] = {
 /*static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };*/
 static const char *roficmd[] = { "rofi", "-show", "run", NULL };
 static const char *termcmd[]  = { "alacritty", "-o", "font.size=9", NULL };
-static const char *browsercmd[]  = { "qutebrowser", NULL };
+static const char *browsercmd[]  = { "brave", NULL };
 static const char *bluetoothcmd[]  = { "blueman-manager", NULL };
 static const char *pavucontrolcmd[]  = { "pavucontrol", NULL };
 
