@@ -167,14 +167,14 @@ static void expose(XEvent *e);
 static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
-static void focusstack(const Arg *arg);
+// static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
-static void incnmaster(const Arg *arg);
+// static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
@@ -200,7 +200,7 @@ static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
 static void setlayout(const Arg *arg);
-static void setmfact(const Arg *arg);
+// static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
@@ -834,31 +834,31 @@ focusmon(const Arg *arg)
 	focus(NULL);
 }
 
-void
-focusstack(const Arg *arg)
-{
-	Client *c = NULL, *i;
-
-	if (!selmon->sel || (selmon->sel->isfullscreen && lockfullscreen))
-		return;
-	if (arg->i > 0) {
-		for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next);
-		if (!c)
-			for (c = selmon->clients; c && !ISVISIBLE(c); c = c->next);
-	} else {
-		for (i = selmon->clients; i != selmon->sel; i = i->next)
-			if (ISVISIBLE(i))
-				c = i;
-		if (!c)
-			for (; i; i = i->next)
-				if (ISVISIBLE(i))
-					c = i;
-	}
-	if (c) {
-		focus(c);
-		restack(selmon);
-	}
-}
+// void
+// focusstack(const Arg *arg)
+// {
+// 	Client *c = NULL, *i;
+//
+// 	if (!selmon->sel || (selmon->sel->isfullscreen && lockfullscreen))
+// 		return;
+// 	if (arg->i > 0) {
+// 		for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next);
+// 		if (!c)
+// 			for (c = selmon->clients; c && !ISVISIBLE(c); c = c->next);
+// 	} else {
+// 		for (i = selmon->clients; i != selmon->sel; i = i->next)
+// 			if (ISVISIBLE(i))
+// 				c = i;
+// 		if (!c)
+// 			for (; i; i = i->next)
+// 				if (ISVISIBLE(i))
+// 					c = i;
+// 	}
+// 	if (c) {
+// 		focus(c);
+// 		restack(selmon);
+// 	}
+// }
 
 Atom
 getatomprop(Client *c, Atom prop)
@@ -976,12 +976,12 @@ grabkeys(void)
 	}
 }
 
-void
-incnmaster(const Arg *arg)
-{
-	selmon->nmaster = MAX(selmon->nmaster + arg->i, 0);
-	arrange(selmon);
-}
+// void
+// incnmaster(const Arg *arg)
+// {
+// 	selmon->nmaster = MAX(selmon->nmaster + arg->i, 0);
+// 	arrange(selmon);
+// }
 
 #ifdef XINERAMA
 static int
@@ -1521,19 +1521,19 @@ setlayout(const Arg *arg)
 }
 
 /* arg > 1.0 will set mfact absolutely */
-void
-setmfact(const Arg *arg)
-{
-	float f;
-
-	if (!arg || !selmon->lt[selmon->sellt]->arrange)
-		return;
-	f = arg->f < 1.0 ? arg->f + selmon->mfact : arg->f - 1.0;
-	if (f < 0.05 || f > 0.95)
-		return;
-	selmon->mfact = f;
-	arrange(selmon);
-}
+// void
+// setmfact(const Arg *arg)
+// {
+// 	float f;
+//
+// 	if (!arg || !selmon->lt[selmon->sellt]->arrange)
+// 		return;
+// 	f = arg->f < 1.0 ? arg->f + selmon->mfact : arg->f - 1.0;
+// 	if (f < 0.05 || f > 0.95)
+// 		return;
+// 	selmon->mfact = f;
+// 	arrange(selmon);
+// }
 
 void
 setup(void)
