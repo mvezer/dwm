@@ -28,11 +28,11 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	// { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -59,14 +59,18 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "ghostty", NULL };
-static const char *browsercmd[]  = { "brave-browser-stable", NULL };
+static const char *applaunchercmd[] = { "app-launcher", NULL };
+static const char *termcmd[]  = { "alacritty", "-o", "font.size=8.0", NULL };
+static const char *browsercmd[]  = { "qutebrowser", NULL };
 static const char *incvol[] = {"/usr/bin/pulsemixer", "--change-volume", "+5", NULL};
 static const char *decvol[] = {"/usr/bin/pulsemixer", "--change-volume", "-5", NULL};
+static const char *powermenucmd[] = {"show-power-menu", NULL};
+static const char *screenconfigcmd[] = {"screen-config", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_space,      spawn,          {.v = dmenucmd } },
+	// { MODKEY,                       XK_space,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_space,      spawn,          {.v = applaunchercmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
@@ -78,7 +82,10 @@ static const Key keys[] = {
 	// { MODKEY,                       XK_Left,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_f, zoom,           {0} },
 	// { MODKEY,                       XK_Tab,    view,           {0} },
-	{ SUPERKEY,                     XK_w,      killclient,     {0} },
+	// { SUPERKEY,                     XK_w,      killclient,     {0} },
+	{ SUPERKEY,                     XK_q,      killclient,     {0} },
+  { SUPERKEY|ShiftMask,           XK_p,      spawn,          {.v = powermenucmd} },
+  { SUPERKEY,                     XK_s,      spawn,          {.v = screenconfigcmd} },
 	// { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	// { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	// { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -108,7 +115,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ SUPERKEY|ShiftMask,             XK_q,      quit,           {0} },
   { 0,				XF86XK_AudioLowerVolume,spawn,{.v = decvol} },	
   { 0,				XF86XK_AudioRaiseVolume,spawn,{.v = incvol} },
 };
