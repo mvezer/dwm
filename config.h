@@ -61,7 +61,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *applaunchercmd[] = { "app-launcher", NULL };
 static const char *termcmd[]  = { "alacritty", "-o", "font.size=8.0", NULL };
-static const char *browsercmd[]  = { "qutebrowser", NULL };
+static const char *browsercmd[]  = { "vivaldi-stable", NULL };
 static const char *incvol[] = {"/usr/bin/pulsemixer", "--change-volume", "+5", NULL};
 static const char *decvol[] = {"/usr/bin/pulsemixer", "--change-volume", "-5", NULL};
 static const char *powermenucmd[] = {"show-power-menu", NULL};
