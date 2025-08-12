@@ -20,11 +20,11 @@
  *
  * To understand everything else, start reading main().
  */
+#include <X11/XF86keysym.h>
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xproto.h>
 #include <X11/Xutil.h>
-#include <X11/XF86keysym.h>
 #include <X11/cursorfont.h>
 #include <X11/keysym.h>
 #include <errno.h>
@@ -54,8 +54,8 @@
 #define INTERSECT(x, y, w, h, m)                                               \
   (MAX(0, MIN((x) + (w), (m)->wx + (m)->ww) - MAX((x), (m)->wx)) *             \
    MAX(0, MIN((y) + (h), (m)->wy + (m)->wh) - MAX((y), (m)->wy)))
-#define ISVISIBLEONTAG(C, T)    ((C->tags & T))
-#define ISVISIBLE(C)            ISVISIBLEONTAG(C, C->mon->tagset[C->mon->seltags])
+#define ISVISIBLEONTAG(C, T) ((C->tags & T))
+#define ISVISIBLE(C) ISVISIBLEONTAG(C, C->mon->tagset[C->mon->seltags])
 #define MOUSEMASK (BUTTONMASK | PointerMotionMask)
 #define WIDTH(X) ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X) ((X)->h + 2 * (X)->bw)
@@ -408,13 +408,13 @@ int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact) {
 }
 
 void attachaside(Client *c) {
-	Client *at = nexttagged(c);
-	if(!at) {
-		attach(c);
-		return;
-	}
-	c->next = at->next;
-	at->next = c;
+  Client *at = nexttagged(c);
+  if (!at) {
+    attach(c);
+    return;
+  }
+  c->next = at->next;
+  at->next = c;
 }
 
 void arrange(Monitor *m) {
@@ -1180,14 +1180,12 @@ void movemouse(const Arg *arg) {
   }
 }
 
-Client *
-nexttagged(Client *c) {
-	Client *walked = c->mon->clients;
-	for(;
-		walked && (walked->isfloating || !ISVISIBLEONTAG(walked, c->tags));
-		walked = walked->next
-	);
-	return walked;
+Client *nexttagged(Client *c) {
+  Client *walked = c->mon->clients;
+  for (; walked && (walked->isfloating || !ISVISIBLEONTAG(walked, c->tags));
+       walked = walked->next)
+    ;
+  return walked;
 }
 
 Client *nexttiled(Client *c) {
@@ -1640,7 +1638,7 @@ void tagmon(const Arg *arg) {
 }
 
 void tile(Monitor *m) {
-  unsigned int i, n, h, mw, my, ty;
+  unsigned int i, n, h, r, g = 0, mw, my, ty;
   Client *c;
 
   for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++)
@@ -1649,22 +1647,24 @@ void tile(Monitor *m) {
     return;
 
   if (n > m->nmaster)
-    mw = m->nmaster ? m->ww * m->mfact : 0;
+    mw = m->nmaster ? (m->ww - (g = gappx)) * m->mfact : 0;
   else
     mw = m->ww;
   for (i = my = ty = 0, c = nexttiled(m->clients); c;
        c = nexttiled(c->next), i++)
     if (i < m->nmaster) {
-      h = (m->wh - my) / (MIN(n, m->nmaster) - i);
+      r = MIN(n, m->nmaster) - i;
+      h = (m->wh - my - gappx * (r - 1)) / r;
       resize(c, m->wx, m->wy + my, mw - (2 * c->bw), h - (2 * c->bw), 0);
       if (my + HEIGHT(c) < m->wh)
-        my += HEIGHT(c);
+        my += HEIGHT(c) + gappx;
     } else {
-      h = (m->wh - ty) / (n - i);
-      resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2 * c->bw),
-             h - (2 * c->bw), 0);
+      r = n - i;
+      h = (m->wh - ty - gappx * (r - 1)) / r;
+      resize(c, m->wx + mw + g, m->wy + ty, m->ww - mw - g - (2 * c->bw),
+             h - (2 * c->bw), False);
       if (ty + HEIGHT(c) < m->wh)
-        ty += HEIGHT(c);
+        ty += HEIGHT(c) + gappx;
     }
 }
 
